@@ -7,42 +7,52 @@ namespace miniproject1.Services
 {
     internal class AuthorService
     {
-        private List<Author> Authors { get; set; } = new List<Author>();
+        public List<Author> Authors { get; set; } = new List<Author>();
 
         public void AddAuthor()
         {
             Console.Write("Enter author name: ");
             string name = Console.ReadLine();
+            Console.Clear();
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Name cannot be empty.");
+                Console.ResetColor();
+                return;
+            }
             var author = Authors.Find(a => a.Name.ToUpper() == name.ToUpper());
             if (author == null)
             {
                 Authors.Add(new Author { Name = name });
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Author created successfully.");
+                Console.ResetColor();
             }
-            else Console.WriteLine("Author already exists.");
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Author already exists.");
+                Console.ResetColor();
+            }
         }
         public void ShowAllAuthors()
         {
-            Console.WriteLine("Authors:");
-            foreach (var author in Authors)
+            if (Authors.Count > 0)
             {
-                Console.WriteLine($"Id: {author.Id}, Name: {author.Name}");
-            }
-        }
-        public void ShowBooksByAuthor()
-        {
-            Console.Write("Enter author name: ");
-            string name = Console.ReadLine();
-            var author = Authors.Find(a => a.Name.ToUpper() == name.ToUpper());
-            if (author != null)
-            {
-                Console.WriteLine($"Books by {author.Name}:");
-                foreach (var book in author.Books)
+                Console.WriteLine("Authors:");
+                foreach (var author in Authors)
                 {
-                    Console.WriteLine($"Title: {book.Title}, Genre: {book.Genre}, Price: {book.Price}");
+                    Console.WriteLine($"Id: {author.Id}, Name: {author.Name}");
                 }
             }
-            else Console.WriteLine("Author not found.");
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("No authors found.");
+                Console.ResetColor();
+            }
+            ;
         }
         public Author GetAuthorById(int id)
         {

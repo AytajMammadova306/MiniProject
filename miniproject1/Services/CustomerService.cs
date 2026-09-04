@@ -20,9 +20,23 @@ namespace miniproject1.Services
         {
             Console.Write("Enter customer name: ");
             string name = Console.ReadLine();
-            Console.WriteLine("Enter customer email: ");
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Name cannot be empty.");
+                Console.ResetColor();
+                return;
+            }
+            Console.Write("Enter customer email: ");
             string email = Console.ReadLine();
-            if(Customers.Exists(c => c.Email.ToUpper() == email.ToUpper()))
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Email cannot be empty.");
+                Console.ResetColor();
+                return;
+            }
+            if (Customers.Exists(c => c.Email.ToUpper() == email.ToUpper()))
             {
                 Console.WriteLine("Customer with this email already exists.");
                 return;
@@ -30,21 +44,39 @@ namespace miniproject1.Services
             else
             {
                 Customers.Add(new Customer { Name = name, Email = email });
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Customer created successfully.");
+                Console.ResetColor();
             }
 
         }
         public void ShowAllCustomers()
         {
-            Console.WriteLine("Customers:");
-            foreach (var customer in Customers)
+            if (Customers.Count > 0)
             {
-                Console.WriteLine(customer);
+                Console.WriteLine("Customers:");
+                foreach (var customer in Customers)
+                {
+                    Console.WriteLine(customer);
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("No customers available.");
+                Console.ResetColor();
             }
         }
         public void AddOrder()
         {
-            Console.WriteLine("Choose a customer to add an order for:");
+            if (Customers.Count == 0 || OrderItemService.BookService.Books.Count == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("No books or customers available to create an order. Please add books and customers first.");
+                Console.ResetColor();
+                return;
+            }
             int id;
             Customer customer = null;
             do
@@ -54,6 +86,7 @@ namespace miniproject1.Services
                 string answer = Console.ReadLine();
                 Console.Clear();
                 bool result = int.TryParse(answer, out id);
+                customer = Customers.Find(c => c.Id == id);
                 if (!result)
                 {
                     Console.WriteLine("Entry is wrong");
@@ -63,10 +96,11 @@ namespace miniproject1.Services
                         return;
                     }
                 }
-                customer = Customers.Find(c => c.Id == id);
-                if (customer == null)
+                else if (customer == null)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Customer not found.");
+                    Console.ResetColor();
                     bool loop = Extentions.TryAgain();
                     if (!loop)
                     {
@@ -75,11 +109,10 @@ namespace miniproject1.Services
                 }
                 else break;
             } while (true);
-            List<OrderItem> items = new List<OrderItem>();
-            decimal total= 0;
+            List<OrderItem> items = new List<OrderItem>();;
             do
             {
-                OrderItemService.AddOrderItem(items,total);
+                OrderItemService.AddOrderItem(items);
                 Console.WriteLine("Order Item added successfully.");
                 bool loop = Extentions.AddAnother();
                 if(!loop)
@@ -87,11 +120,26 @@ namespace miniproject1.Services
                     break;
                 }
             } while (true);
-            Order order = new Order { Customer = customer, OrderItems = items , TotalAmount=total};
+            decimal totalAmount = 0;
+            foreach (var item in items)
+            {
+                totalAmount += item.SubTotal;
+            }
+            Order order = new Order { Customer = customer, OrderItems = items , TotalAmount = totalAmount };
+            Orders.Add(order);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Order created successfully.");
+            Console.ResetColor();
         }
         public void ShowOrdersByCustomerId()
         {
-            Console.WriteLine("Choose a customer to show orders for:");
+            if(Customers.Count == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("No customers available.");
+                Console.ResetColor();
+                return;
+            }
             int id;
             Customer customer = null;
             do
@@ -125,42 +173,80 @@ namespace miniproject1.Services
             var orders = Orders.FindAll(o => o.Customer.Id == customer.Id);
             if (orders.Count == 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("No orders found for this customer.");
+                Console.ResetColor();
                 return;
             }
             foreach (var order in orders)
             {
-                Console.WriteLine(order);
+                order.PrintInfo();
             }
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\nPress any Key to go back to Main Menu...");
+            Console.ResetColor();
+            Console.ReadKey();
+            Console.Clear();
         }
         public void ShowOrdersByCustomerEmail()
         {
+            if(Customers.Count == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("No customers available.");
+                Console.ResetColor();
+                return;
+            }
             Console.WriteLine("Enter customer email to show orders for:");
             string email = Console.ReadLine();
+            Console.Clear();
             var customer = Customers.Find(c => c.Email.ToUpper() == email.ToUpper());
             if (customer == null)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Customer not found.");
+                Console.ResetColor();
                 return;
             }
             var orders = Orders.FindAll(o => o.Customer.Id == customer.Id);
             if (orders.Count == 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("No orders found for this customer.");
+                Console.ResetColor();
                 return;
             }
             foreach (var order in orders)
             {
-                Console.WriteLine(order);
+                order.PrintInfo();
             }
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\nPress any Key to go back to Main Menu...");
+            Console.ResetColor();
+            Console.ReadKey();
+            Console.Clear();
         }
         public void ShowAllOrders()
         {
-
-            Console.WriteLine("Orders:");
-            foreach (var order in Orders)
+            if (Orders.Count > 0)
             {
-                Console.WriteLine(order);
+                Console.WriteLine("Orders:");
+                foreach (var order in Orders)
+                {
+                    order.PrintInfo();
+                }
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\nPress any Key to go back to Main Menu...");
+                Console.ResetColor();
+                Console.ReadKey();
+                Console.Clear();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("No orders available.");
+                Console.ResetColor();
+                return;
             }
         }
     }

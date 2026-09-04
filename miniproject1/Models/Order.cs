@@ -33,7 +33,7 @@ namespace miniproject1.Models
             Console.WriteLine($"\t{TotalAmount:C}\n");
             Console.ResetColor();
             Console.WriteLine("******************************************");
-            Console.WriteLine($"Email:{Customer.Email}\nOrder Date{OrderDate.ToString()}");
+            Console.WriteLine($"Email:{Customer.Email}\nOrder Date:{OrderDate.ToString()}");
             Console.WriteLine("===========================================");
         }
     }

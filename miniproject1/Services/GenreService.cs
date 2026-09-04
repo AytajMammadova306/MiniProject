@@ -8,41 +8,52 @@ namespace miniproject1.Services
 {
     internal class GenreService
     {
-        private List<Genre> Genres { get; set; } = new List<Genre>();
+        public List<Genre> Genres { get; set; } = new List<Genre>();
         public void AddGenre()
         {
             Console.Write("Enter Genre Name: ");
             string name = Console.ReadLine();
+            Console.Clear();
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Name cannot be empty.");
+                Console.ResetColor();
+                return;
+            }
             var genre = Genres.Find(g => g.Name.ToUpper() == name.ToUpper());
             if (genre == null)
             {
                 Genre newGenre = new Genre { Name = name };
                 Genres.Add(newGenre);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Genre created successfully.");
+                Console.ResetColor();
             }
-            else Console.WriteLine("Genre already exists");
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Genre already exists.");
+                Console.ResetColor();
+            }
         }
         public void ShowAllGenres()
         {
-            Console.WriteLine("Genres:");
-            foreach (var genre in Genres)
+            if (Genres.Count > 0)
             {
-                Console.WriteLine($"Id: {genre.Id}, Name: {genre.Name}");
-            }
-        }
-        public void ShowBooksByGenre()
-        {
-            Console.Write("Enter Genre Name: ");
-            string name = Console.ReadLine();
-            var genre = Genres.Find(g => g.Name.ToUpper() == name.ToUpper());
-            if (genre != null)
-            {
-                Console.WriteLine($"Books in {genre.Name}:");
-                foreach (var book in genre.Books)
+                Console.WriteLine("Genres:");
+                foreach (var genre in Genres)
                 {
-                    Console.WriteLine($"Title: {book.Title}, Author: {book.Author}, Price: {book.Price}");
+                    Console.WriteLine($"Id: {genre.Id}, Name: {genre.Name}");
                 }
+                
             }
-            else Console.WriteLine("Genre not found.");
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("No genres available.");
+                Console.ResetColor();
+            }
         }
         public Genre GetGenreById(int id)
         {

@@ -9,7 +9,6 @@ namespace miniproject1.Models
         private static int _id = 0;
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Book> Books { get; set; } = new List<Book>();
         public Genre()
         {
             Id = ++_id;

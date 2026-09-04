@@ -8,15 +8,13 @@ namespace miniproject1.Services
 {
     internal class OrderItemService
     {
-        private BookService BookService;
+        public BookService BookService;
         public OrderItemService(BookService bookService)
         {
             BookService = bookService;
         }
-        public void AddOrderItem(List<OrderItem> orderItems, decimal total)
+        public void AddOrderItem(List<OrderItem> orderItems)
         {
-            Console.WriteLine("Choose a book to add to the order:");
-            BookService.ShowAllBooks();
             int id;
             Book book = null;
             do
@@ -64,7 +62,7 @@ namespace miniproject1.Services
                         return;
                     }
                 }
-                if(quantity >= book.Stock)
+                else if(quantity > book.Stock)
                 {
                     Console.WriteLine($"Not enough stock. Available stock: {book.Stock}");
                     bool loop = Extentions.TryAgain();
@@ -73,7 +71,7 @@ namespace miniproject1.Services
                         return;
                     }
                 }
-                if(quantity <= 0 &&result)
+                else if(quantity <= 0 &&result)
                 {
                     Console.WriteLine("Quantity must be greater than 0.");
                     bool loop = Extentions.TryAgain();
@@ -84,10 +82,10 @@ namespace miniproject1.Services
                 }
                 else break;
             } while (true);
-            total += book.Price * quantity;
             OrderItem oi=orderItems.Find(o => o.Book.Id == book.Id);
             if (oi == null) orderItems.Add(new OrderItem { Book = book, Quantity = quantity, });
             else oi.Quantity += quantity;
+            book.Stock -= quantity;
 
         }
     }
