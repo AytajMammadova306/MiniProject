@@ -17,7 +17,7 @@ namespace miniproject1.Services
             if (author == null)
             {
                 Authors.Add(new Author { Name = name });
-                Console.WriteLine("Created successfully.");
+                Console.WriteLine("Author created successfully.");
             }
             else Console.WriteLine("Author already exists.");
         }

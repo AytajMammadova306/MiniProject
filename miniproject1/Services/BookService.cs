@@ -9,7 +9,7 @@ namespace miniproject1.Services
 {
     internal class BookService
     {
-        private List<Book> Books { get; set; } = new List<Book>();
+        public List<Book> Books { get; set; } = new List<Book>();
         private GenreService GenreService { get; set; }
         private AuthorService AuthorService { get; set; }
         public BookService(GenreService genreService, AuthorService authorService)
@@ -143,8 +143,8 @@ namespace miniproject1.Services
             Book book = null;
             do
             {
-                Console.Write("Enter the ID of the book to edit:");
                 ShowAllBooks();
+                Console.Write("Enter the ID of the book to edit:");
                 string answer = Console.ReadLine();
                 Console.Clear();
                 bool result = int.TryParse(answer, out id);

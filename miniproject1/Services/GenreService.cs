@@ -9,7 +9,7 @@ namespace miniproject1.Services
     internal class GenreService
     {
         private List<Genre> Genres { get; set; } = new List<Genre>();
-        public void CreateGenre()
+        public void AddGenre()
         {
             Console.Write("Enter Genre Name: ");
             string name = Console.ReadLine();

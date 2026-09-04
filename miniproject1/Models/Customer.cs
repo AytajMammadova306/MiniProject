@@ -15,5 +15,9 @@ namespace miniproject1.Models
         {
             Id=++_id;
         }
+        public override string ToString()
+        {
+            return $"Id: {Id}, Name: {Name}, Email: {Email}";
+        }
     }
 }
