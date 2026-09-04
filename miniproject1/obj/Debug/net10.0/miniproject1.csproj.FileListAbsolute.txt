@@ -1,0 +1,15 @@
+C:\Users\ayxan\OneDrive\Desktop\miniproject1\miniproject1\bin\Debug\net10.0\miniproject1.exe
+C:\Users\ayxan\OneDrive\Desktop\miniproject1\miniproject1\bin\Debug\net10.0\miniproject1.deps.json
+C:\Users\ayxan\OneDrive\Desktop\miniproject1\miniproject1\bin\Debug\net10.0\miniproject1.runtimeconfig.json
+C:\Users\ayxan\OneDrive\Desktop\miniproject1\miniproject1\bin\Debug\net10.0\miniproject1.dll
+C:\Users\ayxan\OneDrive\Desktop\miniproject1\miniproject1\bin\Debug\net10.0\miniproject1.pdb
+C:\Users\ayxan\OneDrive\Desktop\miniproject1\miniproject1\obj\Debug\net10.0\miniproject1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ayxan\OneDrive\Desktop\miniproject1\miniproject1\obj\Debug\net10.0\miniproject1.AssemblyInfoInputs.cache
+C:\Users\ayxan\OneDrive\Desktop\miniproject1\miniproject1\obj\Debug\net10.0\miniproject1.AssemblyInfo.cs
+C:\Users\ayxan\OneDrive\Desktop\miniproject1\miniproject1\obj\Debug\net10.0\miniproject1.csproj.CoreCompileInputs.cache
+C:\Users\ayxan\OneDrive\Desktop\miniproject1\miniproject1\obj\Debug\net10.0\miniproject1.sourcelink.json
+C:\Users\ayxan\OneDrive\Desktop\miniproject1\miniproject1\obj\Debug\net10.0\miniproject1.dll
+C:\Users\ayxan\OneDrive\Desktop\miniproject1\miniproject1\obj\Debug\net10.0\refint\miniproject1.dll
+C:\Users\ayxan\OneDrive\Desktop\miniproject1\miniproject1\obj\Debug\net10.0\miniproject1.pdb
+C:\Users\ayxan\OneDrive\Desktop\miniproject1\miniproject1\obj\Debug\net10.0\miniproject1.genruntimeconfig.cache
+C:\Users\ayxan\OneDrive\Desktop\miniproject1\miniproject1\obj\Debug\net10.0\ref\miniproject1.dll
